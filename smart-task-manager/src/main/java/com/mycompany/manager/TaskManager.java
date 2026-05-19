@@ -1,9 +1,8 @@
 package com.mycompany.manager;
 
-import com.mycompany.database.DatabaseHandler;
 import com.mycompany.exceptions.InvalidTaskException;
-import com.mycompany.exceptions.TaskNotFoundException;
 import com.mycompany.model.Task;
+import com.mycompany.network.TaskClient;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -11,25 +10,11 @@ import java.util.List;
 
 public class TaskManager {
 
-    private final List<Task> tasks;
-
-    private final DatabaseHandler db;
+    private final TaskClient client;
 
     public TaskManager() {
 
-        db = new DatabaseHandler();
-
-        tasks = new ArrayList<>();
-
-        refreshFromDatabase();
-    }
-
-    // REFRESH TASKS FROM DATABASE
-    private void refreshFromDatabase() {
-
-        tasks.clear();
-
-        tasks.addAll(db.getAllTasks());
+        client = new TaskClient();
     }
 
     // ADD TASK
@@ -52,122 +37,52 @@ public class TaskManager {
             );
         }
 
-        db.addTask(task);
-
-        refreshFromDatabase();
+        client.addTask(task);
     }
 
-    // GET ALL TASKS
+    // GET TASKS
     public List<Task> getTasks() {
 
-        refreshFromDatabase();
-
-        return tasks;
+        return client.getTasks();
     }
 
     // DELETE TASK
-    public void deleteTask(int id)
-            throws TaskNotFoundException {
+    public void deleteTask(int id) {
 
-        boolean found = false;
-
-        for (Task task : tasks) {
-
-            if (task.getId() == id) {
-
-                found = true;
-
-                break;
-            }
-        }
-
-        if (!found) {
-
-            throw new TaskNotFoundException(
-                    "Task not found"
-            );
-        }
-
-        db.deleteTask(id);
-
-        refreshFromDatabase();
+        client.deleteTask(id);
     }
 
-    // MARK TASK COMPLETED
-    public void markTaskCompleted(int id)
-            throws TaskNotFoundException {
+    // COMPLETE TASK
+    public void markTaskCompleted(int id) {
 
-        boolean found = false;
-
-        for (Task task : tasks) {
-
-            if (task.getId() == id) {
-
-                found = true;
-
-                break;
-            }
-        }
-
-        if (!found) {
-
-            throw new TaskNotFoundException(
-                    "Task not found"
-            );
-        }
-
-        db.markTaskCompleted(id);
-
-        refreshFromDatabase();
+        client.completeTask(id);
     }
 
     // UPDATE TASK
-    public void updateTask(Task updatedTask)
-            throws TaskNotFoundException {
+    public void updateTask(Task updatedTask) {
 
-        boolean found = false;
+        deleteTask(updatedTask.getId());
 
-        for (Task task : tasks) {
-
-            if (task.getId() == updatedTask.getId()) {
-
-                found = true;
-
-                break;
-            }
-        }
-
-        if (!found) {
-
-            throw new TaskNotFoundException(
-                    "Task not found"
-            );
-        }
-
-        db.updateTask(updatedTask);
-
-        refreshFromDatabase();
+        client.addTask(updatedTask);
     }
 
-    // FILTER TASKS BY CATEGORY
+    // FILTER
     public List<Task> getTasksByCategory(
             String category
     ) {
 
-        refreshFromDatabase();
-
-        List<Task> filteredTasks =
+        List<Task> filtered =
                 new ArrayList<>();
 
-        for (Task task : tasks) {
+        for (Task task : getTasks()) {
 
             if (task.getCategory()
                     .equalsIgnoreCase(category)) {
 
-                filteredTasks.add(task);
+                filtered.add(task);
             }
         }
 
-        return filteredTasks;
+        return filtered;
     }
 }
