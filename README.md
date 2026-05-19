@@ -1,29 +1,118 @@
-# Smart Task Manager
+# Smart Task Manager (Client-Server Version)
 
-A JavaFX desktop application for managing tasks with MySQL database integration.
+A JavaFX desktop application for task management using a TCP client-server architecture with MySQL database integration.
 
-## Features
+This project demonstrates:
+- Object-Oriented Programming
+- JavaFX GUI development
+- MySQL database integration
+- TCP socket networking
+- Client-server architecture
+- Maven project management
+- Unit testing with JUnit
 
+---
+
+# Features
+
+## Task Management
 - Add tasks
-- Update existing tasks
+- Update tasks
 - Delete tasks
 - Mark tasks as completed
 - Filter tasks by category
-- Store tasks in MySQL database
-- Automatic category loading
+- Automatic task numbering
 - Input validation
-- JavaFX graphical user interface
+
+## Networking Features
+- TCP socket communication
+- Client-server architecture
+- Centralized task management server
+- Custom communication protocol
+- Multiple client support
+
+## Database Features
+- MySQL database storage
+- Persistent task saving
+- Automatic task retrieval
 
 ---
 
 # Technologies Used
 
-- Java 24
-- JavaFX
-- Maven
-- MySQL
-- JDBC
-- JUnit 5
+| Technology | Purpose |
+|---|---|
+| Java 24 | Main programming language |
+| JavaFX | GUI framework |
+| Maven | Dependency management |
+| MySQL | Database |
+| JDBC | Database connectivity |
+| TCP Sockets | Networking |
+| JUnit 5 | Testing |
+
+---
+
+# System Architecture
+
+```text
+JavaFX Client App
+        │
+        │ TCP Socket Communication
+        ▼
+Task Server
+        │
+        ▼
+MySQL Database
+```
+
+---
+
+# Communication Protocol
+
+The client communicates with the server using a custom text-based protocol.
+
+## Protocol Format
+
+```text
+COMMAND|DATA1|DATA2|DATA3
+```
+
+## Supported Commands
+
+| Command | Description |
+|---|---|
+| ADD | Add a task |
+| GET_ALL | Retrieve all tasks |
+| DELETE | Delete task |
+| COMPLETE | Mark task completed |
+
+---
+
+# Example Messages
+
+## Add Task
+
+```text
+ADD|Finish Assignment|2026-05-20|High|Pending|College
+```
+
+## Get Tasks
+
+```text
+GET_ALL
+```
+
+## Delete Task
+
+```text
+DELETE|3
+```
+
+## Mark Completed
+
+```text
+COMPLETE|5
+```
 
 ---
 
@@ -38,6 +127,12 @@ smart-task-manager
 │   │       └── com
 │   │           └── mycompany
 │   │               ├── app
+│   │               │   └── TaskApp.java
+│   │               │
+│   │               ├── network
+│   │               │   ├── TaskServer.java
+│   │               │   └── TaskClient.java
+│   │               │
 │   │               ├── database
 │   │               ├── exceptions
 │   │               ├── manager
@@ -45,11 +140,6 @@ smart-task-manager
 │   │
 │   └── test
 │       └── java
-│           └── com
-│               └── mycompany
-│                   ├── database
-│                   ├── manager
-│                   └── model
 │
 ├── pom.xml
 └── README.md
@@ -102,37 +192,46 @@ private final String USER = "root";
 private final String PASSWORD = "YOUR_PASSWORD";
 ```
 
-to your MySQL username and password.
+to your own MySQL credentials.
 
 ---
 
-# JavaFX Setup
+# Running The Project
 
-Download JavaFX SDK:
-
-https://gluonhq.com/products/javafx/
-
-Extract it to:
-
-```text
-C:\javafx-sdk-24.0.2
-```
-
----
-
-# Run The Project
-
-Open terminal inside project folder:
+## Step 1 — Open Project Folder
 
 ```powershell
 cd smart-task-manager
 ```
 
-Run:
+---
+
+# Step 2 — Start The Server
+
+Open terminal 1:
 
 ```powershell
-mvn clean javafx:run
+mvn exec:java "-Dexec.mainClass=com.mycompany.network.TaskServer"
 ```
+
+Expected output:
+
+```text
+Server Started...
+Database Connected Successfully
+```
+
+---
+
+# Step 3 — Start The Client Application
+
+Open terminal 2:
+
+```powershell
+mvn javafx:run
+```
+
+The JavaFX GUI should open successfully.
 
 ---
 
@@ -159,16 +258,31 @@ BUILD SUCCESS
 | Finish OOP Assignment | High | College |
 | Buy Groceries | Medium | Personal |
 | Prepare Presentation | High | Work |
+| Study Networking | High | University |
 
 ---
 
-# Possible Future Improvements
+# Example Workflow
 
-- Search tasks
-- Due date reminders
+1. User adds task through JavaFX GUI
+2. Client sends TCP request to server
+3. Server processes request
+4. Server updates MySQL database
+5. Updated tasks are returned to client
+6. GUI refreshes automatically
+
+---
+
+# Future Improvements
+
 - User authentication
+- Real-time synchronization
+- Task reminders
+- Search functionality
 - Dark mode
-- Task statistics dashboard
+- Dashboard statistics
+- Encrypted communication
+- REST API version
 
 ---
 
@@ -176,4 +290,5 @@ BUILD SUCCESS
 
 Mark Ramy
 
-Advanced Programming 12th Project
+Advanced Programming Project
+```
