@@ -4,3 +4,5 @@ C:\Main\School\Advanced Programming\smart-task-manager\src\main\java\com\mycompa
 C:\Main\School\Advanced Programming\smart-task-manager\src\main\java\com\mycompany\exceptions\TaskNotFoundException.java
 C:\Main\School\Advanced Programming\smart-task-manager\src\main\java\com\mycompany\manager\TaskManager.java
 C:\Main\School\Advanced Programming\smart-task-manager\src\main\java\com\mycompany\model\Task.java
+C:\Main\School\Advanced Programming\smart-task-manager\src\main\java\com\mycompany\network\TaskClient.java
+C:\Main\School\Advanced Programming\smart-task-manager\src\main\java\com\mycompany\network\TaskServer.java

@@ -1,7 +1,6 @@
 package com.mycompany.app;
 
 import com.mycompany.exceptions.InvalidTaskException;
-import com.mycompany.exceptions.TaskNotFoundException;
 import com.mycompany.manager.TaskManager;
 import com.mycompany.model.Task;
 
@@ -80,7 +79,7 @@ public class TaskApp extends Application {
 
         listView = new ListView<>();
 
-        // CUSTOM DISPLAY NUMBERING
+        // CUSTOM DISPLAY
         listView.setCellFactory(param -> new ListCell<Task>() {
 
             @Override
@@ -94,7 +93,8 @@ public class TaskApp extends Application {
 
                 } else {
 
-                    int displayIndex = getIndex() + 1;
+                    int displayIndex =
+                            getIndex() + 1;
 
                     setText(
                             displayIndex + " | " +
@@ -175,7 +175,7 @@ public class TaskApp extends Application {
 
                 showAlert("Task Deleted");
 
-            } catch (TaskNotFoundException ex) {
+            } catch (Exception ex) {
 
                 showAlert(ex.getMessage());
             }
@@ -207,7 +207,7 @@ public class TaskApp extends Application {
                         "Task Marked Completed"
                 );
 
-            } catch (TaskNotFoundException ex) {
+            } catch (Exception ex) {
 
                 showAlert(ex.getMessage());
             }
@@ -370,7 +370,7 @@ public class TaskApp extends Application {
         listView.refresh();
     }
 
-    // AUTO CATEGORY LOADING
+    // AUTO CATEGORY FILTER
     private void updateCategoryFilter() {
 
         Set<String> categories =
@@ -411,7 +411,7 @@ public class TaskApp extends Application {
         datePicker.setValue(null);
     }
 
-    // ALERT BOX
+    // ALERT
     private void showAlert(String message) {
 
         Alert alert =
@@ -427,6 +427,7 @@ public class TaskApp extends Application {
 
         alert.showAndWait();
     }
+
     public static void main(String[] args) {
 
         launch(args);
