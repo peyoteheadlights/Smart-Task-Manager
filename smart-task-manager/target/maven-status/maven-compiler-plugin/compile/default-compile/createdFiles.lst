@@ -1,0 +1,7 @@
+com\mycompany\model\Task.class
+com\mycompany\app\TaskApp$1.class
+com\mycompany\exceptions\InvalidTaskException.class
+com\mycompany\app\TaskApp.class
+com\mycompany\manager\TaskManager.class
+com\mycompany\database\DatabaseHandler.class
+com\mycompany\exceptions\TaskNotFoundException.class

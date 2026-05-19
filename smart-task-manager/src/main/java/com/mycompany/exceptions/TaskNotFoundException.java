@@ -1,0 +1,9 @@
+package com.mycompany.exceptions;
+
+public class TaskNotFoundException extends Exception {
+
+    public TaskNotFoundException(String message) {
+
+        super(message);
+    }
+}

@@ -1,0 +1,3 @@
+com\mycompany\database\DatabaseHandlerTest.class
+com\mycompany\manager\TaskManagerTest.class
+com\mycompany\model\TaskTest.class
